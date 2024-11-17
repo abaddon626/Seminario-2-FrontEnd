@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Encuestas*</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button expand="full" routerLink="/create-survey" color="primary">Crear Encuesta</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let survey of surveys">
+      <ion-label>
+        <h2>{{ survey.title }}</h2>
+        <p>{{ survey.description }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="editSurvey(survey)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteSurvey(survey)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>

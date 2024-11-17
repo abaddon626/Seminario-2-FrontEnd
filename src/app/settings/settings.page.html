@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Opciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Configuraciones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Opción 1</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Opción 2</ion-label>
+        </ion-item>
+        <!-- Añade más opciones según sea necesario -->
+      </ion-list>
+      <ion-button expand="full" [routerLink]="['/login']" color="secondary">Cerrar Sesión</ion-button>
+      <ion-button expand="full" color="danger">Desactivar Cuenta</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

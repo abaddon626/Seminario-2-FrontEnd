@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="createProfile()">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="profile.name" name="name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-input [(ngModel)]="profile.password" name="password" type="password" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Rol</ion-label>
+      <ion-select [(ngModel)]="profile.role" name="role" required>
+        <ion-select-option value="admin">Admin</ion-select-option>
+        <ion-select-option value="usuario">Usuario</ion-select-option>
+        <ion-select-option value="otro">Otro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="full" type="submit">Crear Perfil</ion-button>
+  </form>
+
+  <ion-list *ngIf="profiles.length > 0">
+    <ion-list-header>
+      <ion-label>Perfiles Creados</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let profile of profiles">
+      <ion-label>
+        <h2>{{ profile.name }}</h2>
+        <p>Rol: {{ profile.role }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
