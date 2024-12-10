@@ -10,10 +10,13 @@ ion-content {
 
       ion-label {
         font-weight: bold;
+        color: #333; // Mejorar visibilidad del texto de los labels
       }
 
       ion-input, ion-select {
         margin-top: 5px;
+        color: #000; // Cambiar el color del texto a negro
+        --placeholder-color: #888; // Asegurarse de que los placeholders también sean visibles
       }
     }
 
@@ -22,6 +25,7 @@ ion-content {
       --background: #3880ff;
       --border-radius: 4px;
       --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --color: white; // Asegurarse de que el texto del botón sea visible
     }
   }
 
@@ -37,11 +41,16 @@ ion-content {
         h2 {
           font-weight: bold;
           font-size: 1.2rem;
+          color: #333; // Mejorar visibilidad del texto de los labels
         }
 
         p {
           color: #666;
         }
+      }
+
+      ion-button {
+        --color: white; // Asegurarse de que el texto del botón sea visible
       }
     }
   }

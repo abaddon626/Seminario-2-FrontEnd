@@ -16,18 +16,23 @@
       <ion-avatar class="profile-avatar">
         <img src="https://via.placeholder.com/150" alt="Profile Picture"/>
       </ion-avatar>
-      <ion-list>
+      <ion-list *ngIf="user">
         <ion-item>
           <ion-label>Nombre:</ion-label>
-          <ion-text>Usuario</ion-text>
+          <ion-text>{{ user.nombre }}</ion-text>
         </ion-item>
         <ion-item>
-          <ion-label>Email:</ion-label>
-          <ion-text>Usuario&#64;example.com</ion-text>
+          <ion-label>Código:</ion-label>
+          <ion-text>{{ user.codigo }}</ion-text>
         </ion-item>
         <ion-item>
-          <ion-label>Teléfono:</ion-label>
-          <ion-text>11111111</ion-text>
+          <ion-label>Rol:</ion-label>
+          <ion-text>{{ user.rol_id === 1 ? 'Admin' : 'Usuario' }}</ion-text>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="!user">
+        <ion-item>
+          <ion-label>Cargando...</ion-label>
         </ion-item>
       </ion-list>
     </ion-card-content>

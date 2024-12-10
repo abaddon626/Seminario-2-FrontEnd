@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ survey.estructura.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p>{{ survey.estructura.description }}</p>
+  <ion-list>
+    <ion-item *ngFor="let question of survey.estructura.questions">
+      <ion-label>
+        <strong>Pregunta:</strong> {{ question.question }}<br>
+        <strong>Tipo:</strong> {{ question.type === 1 ? 'Abierta' : question.type === 2 ? 'Cerrada' : 'Opción múltiple' }}<br>
+        <strong>Respuestas:</strong>
+        <ul>
+          <li *ngFor="let response of question.responses">{{ response }}</li>
+        </ul>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Institución</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form *ngIf="userRole !== 2" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input type="text" [(ngModel)]="direccion" name="direccion" required></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="full" type="submit">Crear Institución</ion-button>
+  </form>
+
+  <ion-list *ngIf="instituciones.length > 0">
+    <ion-list-header>
+      <ion-label>Instituciones Creadas</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let institucion of instituciones">
+      <ion-label>
+        <h2>{{ institucion.nombre }}</h2>
+        <p>{{ institucion.direccion }}</p>
+      </ion-label>
+      <ion-list>
+        <ion-item *ngFor="let curso of institucion.cursos">
+          <ion-label>{{ curso.grado }} - {{ curso.salon }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+  </ion-list>
+</ion-content>

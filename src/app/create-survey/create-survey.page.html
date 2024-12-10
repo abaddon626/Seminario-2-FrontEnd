@@ -1,12 +1,56 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button [routerLink]="['/surveys']"></ion-back-button>
+    <ion-title>Crear Encuesta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveSurvey(form)">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Encuestas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <p>Contenido de la página para crear encuestas.</p>
+  <form #form="ngForm" (ngSubmit)="saveSurvey(form)">
+    <ion-item>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input [(ngModel)]="survey.title" name="title" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea [(ngModel)]="survey.description" name="description" required></ion-textarea>
+    </ion-item>
+
+    <ion-list>
+      <ion-item-divider>
+        <ion-label>Preguntas</ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngFor="let question of survey.questions; let i = index" class="question-item">
+        <ion-input placeholder="Pregunta" [(ngModel)]="question.question" name="question{{i}}" required></ion-input>
+        <ion-select [(ngModel)]="question.type" name="type{{i}}">
+          <ion-select-option value="1">Abierta</ion-select-option>
+          <ion-select-option value="2">Cerrada</ion-select-option>
+          <ion-select-option value="3">Opción múltiple</ion-select-option>
+        </ion-select>
+
+        <ion-list *ngIf="question.type !== 1" class="response-list">
+          <ion-item *ngFor="let response of question.responses; let j = index" class="response-item">
+            <ion-input placeholder="Respuesta" [(ngModel)]="question.responses[j]" name="response{{i}}{{j}}" required></ion-input>
+            <ion-button color="danger" (click)="removeResponse(i, j)">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-button (click)="addResponse(i)">Añadir Respuesta</ion-button>
+        </ion-list>
+
+        <ion-button color="danger" (click)="removeQuestion(i)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="full" (click)="addQuestion()">Añadir Pregunta</ion-button>
+    <ion-button expand="full" type="submit">Guardar Encuesta</ion-button>
+  </form>
 </ion-content>

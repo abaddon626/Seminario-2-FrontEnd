@@ -3,23 +3,22 @@
     <ion-buttons slot="start">
       <ion-back-button [routerLink]="['/inicio']"></ion-back-button>
     </ion-buttons>
-    <ion-title>Encuestas*</ion-title>
+    <ion-title>Encuestas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button expand="full" routerLink="/create-survey" color="primary">Crear Encuesta</ion-button>
+  <ion-button *ngIf="userRole === 1" expand="full" routerLink="/create-survey" color="primary">Crear Encuesta</ion-button>
   <ion-list>
     <ion-item *ngFor="let survey of surveys">
       <ion-label>
-        <h2>{{ survey.title }}</h2>
-        <p>{{ survey.description }}</p>
+        <h2>{{ survey.estructura.title }}</h2>
       </ion-label>
       <ion-buttons slot="end">
-        <ion-button (click)="editSurvey(survey)">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        <ion-button (click)="showSurvey(survey)">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
         </ion-button>
-        <ion-button color="danger" (click)="deleteSurvey(survey)">
+        <ion-button *ngIf="userRole === 1" color="danger" (click)="deleteSurvey(survey)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

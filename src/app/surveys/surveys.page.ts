@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { IonicModule, ToastController, ModalController } from '@ionic/angular';
 import { RouterLinkWithHref } from '@angular/router';
-import { Survey } from './survey.interface';
+import { ServicioService } from '../servicio.service';
+import { SurveyDetailComponent } from '../survey-detail/survey-detail.component'; // Importar el componente del modal
 
 @Component({
   selector: 'app-surveys',
@@ -12,27 +13,46 @@ import { Survey } from './survey.interface';
   standalone: true,
   imports: [IonicModule, RouterLinkWithHref, CommonModule, FormsModule]
 })
+export class SurveysPage implements OnInit {
+  surveys: any[] = [];
+  userRole: number = 0; // Inicializar la propiedad
 
-export class SurveysPage {
-  surveys: Survey[] = [
-    { id: 1, title: 'Encuesta A', description: 'Creado por usuario A' },
-    { id: 2, title: 'Encuesta 1', description: 'Creado por usuario ##' },
-    { id: 3, title: 'Encuesta Jhon', description: 'Creado por usuario 0' }
-  ];
+  constructor(
+    private toastController: ToastController,
+    private servicioService: ServicioService,
+    private modalController: ModalController
+  ) {}
 
-  constructor(private toastController: ToastController) {}
-
-  createSurvey(survey: Survey) {
-    this.presentToast('Aqui emerge el componente de crear encuesta ');
+  ngOnInit() {
+    const userRoleStr = localStorage.getItem('user_role');
+    if (userRoleStr !== null) {
+      this.userRole = parseInt(userRoleStr, 10); // Asegurar que el valor no sea nulo antes de convertir
+    }
+    this.servicioService.getEncuestas().subscribe(data => {
+      this.surveys = data.map((survey: any) => {
+        return {
+          ...survey,
+          estructura: JSON.parse(survey.estructura)
+        };
+      });
+    });
   }
 
-  editSurvey(survey: Survey) {
-    this.presentToast('Editando ' + survey.title);
+  async showSurvey(survey: any) {
+    const modal = await this.modalController.create({
+      component: SurveyDetailComponent,
+      componentProps: {
+        survey
+      }
+    });
+    return await modal.present();
   }
 
-  deleteSurvey(survey: Survey) {
-    this.surveys = this.surveys.filter(s => s.id !== survey.id);
-    this.presentToast('Encuesta ' + survey.title + ' eliminada');
+  deleteSurvey(survey: any) {
+    this.servicioService.deleteEncuesta(survey.id).subscribe(() => {
+      this.surveys = this.surveys.filter(s => s.id !== survey.id);
+      this.presentToast(`Encuesta con ID ${survey.id} del usuario ${survey.usuario_id} eliminada`);
+    });
   }
 
   async presentToast(message: string) {

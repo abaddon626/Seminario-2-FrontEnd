@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/login']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Llenar Encuestas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="mostrarFormularioBusqueda">
+    <form (ngSubmit)="buscarEncuestas()">
+      <ion-item>
+        <ion-label>Institución</ion-label>
+        <ion-select [(ngModel)]="selectedInstitucion" name="institucion" (ionChange)="filterCursos()" interface="popover" required>
+          <ion-select-option *ngFor="let institucion of instituciones" [value]="institucion.id">{{ institucion.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Curso</ion-label>
+        <ion-select [(ngModel)]="selectedCurso" name="curso" interface="popover" required>
+          <ion-select-option *ngFor="let curso of filteredCursos" [value]="curso.id">{{ curso.grado }} - {{ curso.salon }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="full" type="submit">Buscar Encuestas</ion-button>
+    </form>
+  </div>
+
+  <div *ngIf="encuestaSeleccionada && encuestaSeleccionada.questions">
+    <form (ngSubmit)="guardarRespuesta()">
+      <div *ngFor="let question of encuestaSeleccionada.questions">
+        <ion-item>
+          <ion-label>{{ question.question }}</ion-label>
+          <ng-container [ngSwitch]="question.type">
+            <!-- Preguntas Abiertas (Tipo 3) -->
+            <ion-input *ngSwitchCase="'3'" [(ngModel)]="respuesta[question.question]" [name]="'pregunta' + question.question" required></ion-input>
+            <!-- Preguntas Cerradas (Tipo 2) -->
+            <ion-select *ngSwitchCase="'2'" [(ngModel)]="respuesta[question.question]" [name]="'pregunta' + question.question" interface="popover" required>
+              <ion-select-option *ngFor="let response of question.responses" [value]="response">{{ response }}</ion-select-option>
+            </ion-select>
+            <!-- Preguntas de Opción Múltiple (Tipo 1) -->
+            <ion-radio-group *ngSwitchCase="'1'" [(ngModel)]="respuesta[question.question]" [name]="'pregunta' + question.question" required>
+              <ion-item *ngFor="let response of question.responses">
+                <ion-label>{{ response }}</ion-label>
+                <ion-radio slot="start" [value]="response"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ng-container>
+        </ion-item>
+      </div>
+      <ion-button expand="full" type="submit">Guardar Respuesta</ion-button>
+    </form>
+  </div>
+</ion-content>

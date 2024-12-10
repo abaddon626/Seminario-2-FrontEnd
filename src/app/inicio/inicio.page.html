@@ -9,7 +9,7 @@
 
 <ion-content id="main-content">
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="userRole === 1">
       <ion-col size="6">
         <ion-card button [routerLink]="['/create-profile']">
           <ion-card-header>
@@ -30,7 +30,48 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+      <ion-col size="6">
+        <ion-card button [routerLink]="['/create-institution']">
+          <ion-card-header>
+            <ion-card-title>Ingresar Institución</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Administra las instituciones.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="userRole === 2">
+      <ion-col size="6">
+        <ion-card button [routerLink]="['/surveys']">
+          <ion-card-header>
+            <ion-card-title>Ver Encuestas</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Ver encuestas.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button [routerLink]="['/create-institution']">
+          <ion-card-header>
+            <ion-card-title>Instituciones</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Ver las instituciones creadas.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button [routerLink]="['/assign-surveys']">
+          <ion-card-header>
+            <ion-card-title>Asignar Encuestas</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Asignar encuestas a los usuarios.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-

@@ -1,0 +1,38 @@
+ion-content {
+  --background: #ffffff; // Asegúrate de que el fondo sea claro
+  --color: #333;         // Asegúrate de que el texto sea oscuro
+
+  ion-item {
+    --background: #f5f5f5; // Fondo claro para los items
+    --color: #333;         // Texto oscuro para los items
+  }
+
+  ion-label {
+    --color: #333; // Texto oscuro para los labels
+  }
+
+  ion-list {
+    --ion-background-color: #ffffff; // Fondo blanco para la lista
+    --color: #333;                   // Texto oscuro para la lista
+  }
+
+  ion-item h2 {
+    color: #333; // Color oscuro para los títulos
+  }
+
+  ion-item ion-label {
+    color: #333; // Color oscuro para los labels dentro de los items
+  }
+
+  ion-item ion-text {
+    color: #333; // Color oscuro para el texto dentro de los items
+  }
+
+  ion-item ion-icon {
+    color: #333; // Color oscuro para los íconos
+  }
+
+  ion-card-title {
+    color: #333; // Color oscuro para los títulos de las tarjetas
+  }
+}
